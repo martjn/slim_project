@@ -5,13 +5,10 @@
         }
     },
     "require": {
-        "slim/slim": "4.*",
-        "slim/psr7": "^1.6",
-        "nyholm/psr7": "^1.8",
-        "nyholm/psr7-server": "^1.1",
-        "guzzlehttp/psr7": "^2",
-        "laminas/laminas-diactoros": "^3.3",
+        "slim/slim": "4.8",
+        "slim/psr7": "1.4",
         "php-di/php-di": "^7.0",
-        "mustache/mustache": "^2.14"
+        "mustache/mustache": "^2.14",
+        "slim/http": "1.2"
     }
 }
