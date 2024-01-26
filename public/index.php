@@ -7,17 +7,25 @@ use DI\Container;
 require __DIR__ . '/../vendor/autoload.php';
 
 $container = new Container();
-AppFactory::setContainer($container);
-$app = AppFactory::create();
 
-$app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write("Hello Slim!!");
-    return $response;
+$container->set('templating', function(){
+    return new Mustache_Engine([
+        "loader" => new Mustache_Loader_FilesystemLoader(
+                __DIR__.'/../templates',
+                ['extension' => '']
+        )
+    ]);
 });
 
-$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
-    $name = ucfirst($args["name"]);
-    $response->getBody()->write(sprintf("Hello, %s!", $name));
+AppFactory::setContainer($container);
+
+$app = AppFactory::create();
+
+$app->get('/hello/{name}', function(Request $request, Response $response, array $args = []){
+    $html = $this->get('templating')->render("hello.html", [
+        "name" => $args["name"]
+    ]);
+    $response->getBody()->write($html);
     return $response;
 });
 
